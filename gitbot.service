@@ -1,0 +1,14 @@
+[Unit]
+Description=Git agent
+
+[Service]
+ExecStart=/usr/bin/python -m bot --space bot.spaces.Discord \
+                                 --token ${BOT_TOKEN} \
+                                 --modules gitbot.std \
+                                 --errorsto "#errors"
+Restart=always
+Type=simple
+User=git
+
+[Install]
+WantedBy=multi-user.target
