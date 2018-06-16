@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='gitbot',
     version='0.0.0',
-    description='A git agent.',
+    description='Git agent on the local network.',
     author='Oshinko',
     author_email='osnk@renjaku.jp',
     url='https://github.com/oshinko/gitbot',

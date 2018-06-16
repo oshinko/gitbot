@@ -6,35 +6,13 @@ This is a Git agent on the local network, running on Discord and Slack.
 
 ![Example](featured.png)
 
-## Commands
-
-See the [real code](gitbot/std.py).
-
-### Init
-
-```bash
-init <repo>
-```
-
-### Push
-
-```bash
-push <local-repo> <remote-repo> <refspec>
-```
-
-### Pull
-
-```bash
-pull <local-repo> <remote-repo> <refspec>
-```
-
 ## Installation
 
 It's a very small package, so you can easily install, update and delete it.
 
 ```bash
 python -m pip install -U -e git+ssh://git@github.com/oshinko/bot.git@next#egg=bot-0.0.0
-python -m pip install -U -e git+ssh://git@github.com/oshinko/gitbot.git@next#egg=gitbot-0.0.0
+python -m pip install -U -e git+ssh://git@github.com/oshinko/gitbot.git@draft#egg=gitbot-0.0.0
 ```
 
 ## Startup
@@ -44,4 +22,42 @@ python -m bot --space bot.spaces.Discord \
               --token ${BOT_TOKEN} \
               --modules gitbot.std \
               --errorsto "#errors"
+```
+
+## Commands
+
+See the [real code](gitbot/std.py).
+
+### Hello
+
+Return information including SSH key.
+
+```bash
+hello
+```
+
+### Init
+
+Create an empty Git repository.
+
+```bash
+init <repo>
+```
+
+### Publish
+
+リポジトリをリモートリポジトリに転送します。
+
+```bash
+publish <namespace>/<local-repo> <remote-repo>
+```
+
+### Subscribe
+
+リモートリポジトリをリポジトリに紐付けます。
+
+その後、購読という形で定期的に同期 (fetch) されます。
+
+```bash
+subscribe <remote-repo> <local-repo>
 ```
