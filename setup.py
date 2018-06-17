@@ -7,8 +7,6 @@ setup(
     author='Oshinko',
     author_email='osnk@renjaku.jp',
     url='https://github.com/oshinko/gitbot',
-    packages=['gitbot'],
-    install_requires=[],
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.6',

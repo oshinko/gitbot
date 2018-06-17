@@ -20,13 +20,13 @@ python -m pip install -U -e git+https://github.com/oshinko/gitbot.git@draft#egg=
 ```bash
 python -m bot --space bot.spaces.Discord \
               --token ${BOT_TOKEN} \
-              --modules gitbot.std \
+              --modules gitbot \
               --errorsto "#errors"
 ```
 
 ## Commands
 
-See the [real code](gitbot/std.py).
+See the [real code](gitbot.py).
 
 ### Hello
 
