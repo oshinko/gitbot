@@ -2,10 +2,11 @@
 Description=Git agent
 
 [Service]
-ExecStart=/usr/bin/python -m bot --space bot.spaces.Discord \
-                                 --token ${BOT_TOKEN} \
-                                 --modules gitbot.std \
-                                 --errorsto "#errors"
+EnvironmentFile=/home/git/.gitbot
+ExecStart=/home/git/.venv/bin/python -m bot --space bot.spaces.Discord \
+                                            --token ${BOT_TOKEN} \
+                                            --modules gitbot.std \
+                                            --errorsto "#errors"
 Restart=always
 Type=simple
 User=git
