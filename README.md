@@ -11,8 +11,8 @@ This is a Git agent on the local network, running on Discord and Slack.
 It's a very small package, so you can easily install, update and delete it.
 
 ```bash
-python -m pip install -U -e git+https://github.com/oshinko/bot.git@next#egg=bot-0.0.0
-python -m pip install -U -e git+https://github.com/oshinko/gitbot.git@draft#egg=gitbot-0.0.0
+python -m pip install -U -e git+https://github.com/oshinko/bot.git#egg=bot-0.0.0
+python -m pip install -U -e git+https://github.com/oshinko/gitbot.git#egg=gitbot-0.0.0
 ```
 
 ## Startup
@@ -96,8 +96,8 @@ ssh-keygen -f $HOME/.ssh/id_rsa -C git@rasppi0w.local -q -N ""
 
 ```bash
 python3.6 -m venv .venv
-.venv/bin/python -m pip install -U -e git+https://github.com/oshinko/bot.git@next#egg=bot-0.0.0
-.venv/bin/python -m pip install -U -e git+https://github.com/oshinko/gitbot.git@draft#egg=gitbot-0.0.0
+.venv/bin/python -m pip install -U -e git+https://github.com/oshinko/bot.git#egg=bot-0.0.0
+.venv/bin/python -m pip install -U -e git+https://github.com/oshinko/gitbot.git#egg=gitbot-0.0.0
 ```
 
 ```bash
