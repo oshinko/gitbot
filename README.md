@@ -101,9 +101,10 @@ python3.6 -m venv .venv
 ```
 
 ```bash
-cat <<EOF>> .gitbot
+cat <<EOF> .gitbot
 GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
-BOT_TOKEN=YOUR_BOT_TOKEN
+GITBOT_TOKEN=YOUR_BOT_TOKEN
+GITBOT_CHANNELS="#your-favorite-channel-1 #your-favorite-channel-2"
 EOF
 ```
 

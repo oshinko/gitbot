@@ -2,9 +2,15 @@ from asyncio import create_subprocess_exec, subprocess
 from base64 import b64decode, b64encode
 from bot import hear, task
 from datetime import timedelta
+from os import environ
 from pathlib import Path
 
-channels = ['#test']
+try:
+    channels = environ['GITBOT_CHANNELS'].split(' ')
+except KeyError:
+    channels = []
+else:
+    channels = [x for x in channels if x]
 
 
 @hear('[Hh]ello', channels=channels, ambient=True)

@@ -4,7 +4,7 @@ Description=Git agent
 [Service]
 EnvironmentFile=/home/git/.gitbot
 ExecStart=/home/git/.venv/bin/python -m bot --space bot.spaces.Discord \
-                                            --token ${BOT_TOKEN} \
+                                            --token ${GITBOT_TOKEN} \
                                             --modules gitbot \
                                             --errorsto "#errors"
 Restart=always
