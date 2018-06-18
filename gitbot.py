@@ -1,6 +1,7 @@
 from asyncio import create_subprocess_exec, subprocess
+from base64 import b64decode, b64encode
 from bot import hear, task
-from datetime import time
+from datetime import timedelta
 from pathlib import Path
 
 channels = ['#test']
@@ -67,23 +68,46 @@ async def publish(message, local, name, remote):
                              'reference was not found in the repository.'))
 
 
+def encode(s):
+    return b64encode(s.encode()).decode().rstrip('=')
+
+
 @hear('[Ss]ubscribe (.+) to (.+)', channels=channels, ambient=True)
 async def subscribe(message, remote, local):
-    # REMOTE=`echo -n remote | base64 | sed -e 's/=*$//'`
-    # if [ -d $HOME/local ]; then
-    #   cd $HOME/local
-    #   git remote add $REMOTE local
-    # else
-    #   git clone remote $HOME/local --origin $REMOTE
-    # fi
-    await message.reply(f'Subscribed {remote} to {local}.')
+    remote_name = encode(remote)
+    local_repo = repo_path(local)
+    if local_repo.is_dir():
+        c = ['git', 'remote', 'add', remote_name, remote]
+        p = await create_subprocess_exec(*c,
+                                         cwd=local_repo,
+                                         stdout=subprocess.PIPE,
+                                         stderr=subprocess.PIPE)
+        outs, errs = await p.communicate()
+    else:
+        c = ['git', 'clone', remote, str(local_repo), '--origin', remote_name,
+             '--progress']
+        p = await create_subprocess_exec(*c,
+                                         stdout=subprocess.PIPE,
+                                         stderr=subprocess.PIPE)
+        outs, errs = await p.communicate()
+    reply = (outs or errs).decode() or f'Subscribed {remote} to {local}.'
+    await message.reply(reply)
 
 
-@task(time(hour=0))
+@task(timedelta(hours=1))
 async def fetch():
-    # for repo in $HOME:
-    #   cd repo
-    #   git fetch --all
-    pass
-    # for ref in Path.home().iterdir():
-    #     pass
+    for repo in Path.home().iterdir():
+        if repo.suffix == '.git':
+            c = ['git', 'remote', '-v']
+            p = await create_subprocess_exec(*c,
+                                             cwd=repo,
+                                             stdout=subprocess.PIPE,
+                                             stderr=subprocess.PIPE)
+            outs, _ = await p.communicate()
+            if outs:
+                c = ['git', 'fetch', '--all', '--progress']
+                p = await create_subprocess_exec(*c,
+                                                 cwd=repo,
+                                                 stdout=subprocess.PIPE,
+                                                 stderr=subprocess.PIPE)
+                await p.communicate()
