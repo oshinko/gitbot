@@ -61,7 +61,7 @@ async def publish(message, local, name, remote):
 {(outs or errs).decode().strip()}
 
 """
-        await message.reply(f"""Published {d.absolute()} as {name} to {remote}.
+        await message.reply(f"""Published {local_repo} as {name} to {remote}.
 
 {reply.strip()}""")
     elif errs:
