@@ -23,7 +23,7 @@ async def hello(message):
 def repo_path(repo):
     p = Path.home() / repo
     if p.suffix != '.git':
-        p = p.with_suffix('.git')
+        p = Path(str(p) + '.git')
     return p
 
 
