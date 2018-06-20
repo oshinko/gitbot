@@ -13,6 +13,12 @@ else:
     channels = [x for x in channels if x]
 
 
+class CLIError(Exception):
+    def __init__(self, message, cause):
+        m = '{}\n{}'.format(message, cause).replace('\n', '\n> ')
+        super().__init__(m)
+
+
 @hear('[Hh]ello', channels=channels, ambient=True)
 async def hello(message):
     with (Path.home() / '.ssh/id_rsa.pub').open() as f:
@@ -99,4 +105,7 @@ async def fetch():
             outs, _ = await p.communicate()
             if outs:
                 p = await run('git', 'fetch', '--all', '--progress', cwd=repo)
-                await p.communicate()
+                outs, errs = await p.communicate()
+                if p.returncode != 0:
+                    raise CLIError(f'Please fix git-fetch error in {repo}',
+                                   (errs or outs).decode())
